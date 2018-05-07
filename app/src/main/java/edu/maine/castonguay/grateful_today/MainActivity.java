@@ -21,40 +21,10 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    public class WebAppInterface {
-        private Context context;
-
-        public WebAppInterface(Context context) {
-            this.context = context;
-        }
-
-        @JavascriptInterface
-        public String loadData() {
-//            return "[{\"letter\": \"A\", \"frequency\": \".09\" },{\"letter\": \"B\", \"frequency\": \".05\" }]";
-            return createDataSet();
-        }
-
-        private String createDataSet() {
-            System.out.println("createDataSet");
-            final Random rand = new Random(System.currentTimeMillis());
-            final String[] x = new String[] {
-                    "A", "B", "C", "D", "E", "F",
-                    "G", "H", "I", "J", "K", "L",
-                    "M", "N", "O", "P", "Q", "R",
-                    "S", "T", "U", "V", "W", "X",
-                    "Y", "Z"};
-            final List<DataPoint> set = new ArrayList<DataPoint>();
-            for (int i = 0; i < x.length ; i++) {
-                set.add( new DataPoint(x[i], rand.nextFloat()));
-            }
-            DataPoint[] pts = set.toArray( new DataPoint[]{} );
-            return new Gson().toJson(pts, DataPoint[].class );
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!OnCreate!!!!!!!!!!!!!!!!");
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -68,19 +38,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
 
-
-
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
         WebView webview = findViewById(R.id.board);
         WebSettings ws = webview.getSettings();
+
         ws.setJavaScriptEnabled(true);
         ws.setAllowFileAccess(true);
         ws.setDomStorageEnabled(true);
         ws.setAllowContentAccess(true);
         ws.setAllowFileAccessFromFileURLs(true);
         ws.setAllowUniversalAccessFromFileURLs(true);
+
+        webview.addJavascriptInterface(new WebAppInterface(this), "app");
         webview.loadUrl("file:///android_asset/main.html");
     }
 
@@ -104,5 +77,37 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public class WebAppInterface {
+        private Context context;
+
+        public WebAppInterface(Context context) {
+            this.context = context;
+        }
+
+        @JavascriptInterface
+        public String loadData() {
+            System.out.println("!!!!!!!!!!!!!!!!!!!loadData!!!!!!!!!!!!!!!!!!!!!!");
+//            return "[{\"letter\": \"A\", \"frequency\": \".09\" },{\"letter\": \"B\", \"frequency\": \".05\" }]";
+            return createDataSet();
+        }
+
+        private String createDataSet() {
+            System.out.println("!!!!!!!!!!!!!!!!!!!createDataSet!!!!!!!!!!!!!!!!!!!!!!");
+            final Random rand = new Random(System.currentTimeMillis());
+            final String[] x = new String[] {
+                    "A", "B", "C", "D", "E", "F",
+                    "G", "H", "I", "J", "K", "L",
+                    "M", "N", "O", "P", "Q", "R",
+                    "S", "T", "U", "V", "W", "X",
+                    "Y", "Z"};
+            final List<DataPoint> set = new ArrayList<DataPoint>();
+            for (int i = 0; i < x.length ; i++) {
+                set.add( new DataPoint(x[i], rand.nextFloat()));
+            }
+            DataPoint[] pts = set.toArray( new DataPoint[]{} );
+            return new Gson().toJson(pts, DataPoint[].class );
+        }
     }
 }

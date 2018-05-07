@@ -1,6 +1,6 @@
-var margin = {top: 40, right: 20, bottom: 30, left: 40},
-    width = window.outerWidth - margin.left - margin.right,
-    height = window.outerHeight - margin.top - margin.bottom;
+var margin = {top: 40, right: 20, bottom: 30, left: 40};
+var width = window.outerWidth - margin.left - margin.right;
+var height = window.outerHeight - margin.top - margin.bottom;
 
 var formatPercent = d3.format(".0%");
 
@@ -29,16 +29,18 @@ var tip = d3.tip()
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-  .append("g")
+    .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 svg.call(tip);
 
-//
-{
+loadData();
+
+function loadData(){
 
   // Load the graphs data by invoking the Java hook
-  var data = JSON.parse(Android.loadData());
+  var data = JSON.parse(app.loadData());
+  var body = document.getElementsByTagName("body");
 
   x.domain(data.map(function(d) { return d.letter; }));
   y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
@@ -51,7 +53,7 @@ svg.call(tip);
   svg.append("g")
       .attr("class", "y axis")
       .call(yAxis)
-    .append("text")
+      .append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", 6)
       .attr("dy", ".71em")
@@ -60,14 +62,14 @@ svg.call(tip);
 
   svg.selectAll(".bar")
       .data(data)
-    .enter().append("rect")
+      .enter().append("rect")
       .attr("class", "bar")
       .attr("x", function(d) { return x(d.letter); })
       .attr("width", x.rangeBand())
       .attr("y", function(d) { return y(d.frequency); })
       .attr("height", function(d) { return height - y(d.frequency); })
       .on('mouseover', tip.show)
-      .on('mouseout', tip.hide)
+      .on('mouseout', tip.hide);
 
 };
 
