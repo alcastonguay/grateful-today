@@ -1,4 +1,4 @@
-  var text_string = "Love hope change music sunshine health music talent hugs life gratitude generosity presence music art family music school learning teaching colors rocks art food plumbing cleanliness teaching music love family friends music art family friends history organization";
+  var text_string = "Love hope teaching change music sunshine health music talent hugs life gratitude generosity presence music art family music school learning colors rocks art food plumbing cleanliness teaching music love family friends  art family friends history organization";
 
   drawWordCloud(text_string);
 
