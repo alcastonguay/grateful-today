@@ -1,11 +1,14 @@
 package edu.maine.castonguay.grateful_today;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 public class AddGratitudeActivity extends AppCompatActivity {
 
@@ -32,13 +35,19 @@ public class AddGratitudeActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        System.out.println(item.getItemId());
         switch(item.getItemId()){
             case R.id.action_settings:
                 return true;
 
-            case R.id.action_new_gratitude:
-                return true;
+            case R.id.action_add_gratitude:
+                EditText gratitudeField = (EditText)findViewById(R.id.editText);
+                String gratitude = gratitudeField.getText().toString();
+
+                Intent intent = new Intent();
+                intent.putExtra("GRATITUDE", gratitude);
+                setResult(Activity.RESULT_OK, intent);
+                finish();
 
             default:
                 return super.onOptionsItemSelected(item);

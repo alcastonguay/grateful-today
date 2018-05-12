@@ -15,7 +15,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static ArrayList<String> gratitudes;
+    static final int NEW_GRATITUDE_REQUEST = 1;
+
+    private static ArrayList<String> gratitudeList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +26,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if (gratitudeList.isEmpty()){
+            gratitudeList.add("Today");
+            gratitudeList.add("Yesterday");
+            gratitudeList.add("Tomorrow");
+        }
 
     }
 
@@ -69,8 +77,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void startNewGratitudeView(MenuItem item){
         Intent newGratitudeIntent = new Intent(this, AddGratitudeActivity.class);
-        startActivity(newGratitudeIntent);
+        startActivityForResult(newGratitudeIntent, NEW_GRATITUDE_REQUEST);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == NEW_GRATITUDE_REQUEST){
+            if(resultCode == RESULT_OK){
+                Bundle extras = data.getExtras();
+                String gratitude = extras.getString("GRATITUDE");
+                gratitudeList.add(gratitude);
+            }
+        }
     }
 
     public class WebAppInterface {
@@ -81,9 +100,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @JavascriptInterface
-        public ArrayList<String> loadData() {
-            gratitudes = GratitudeList.getGratitudeList();
-            return gratitudes;
+        public String loadData() {
+            System.out.println(gratitudeList.toString());
+            return gratitudeList.toString();
         }
 
     }
