@@ -63,8 +63,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch(item.getItemId()){
-            case R.id.action_settings:
-                return true;
 
             case R.id.action_new_gratitude:
                 return true;
@@ -72,7 +70,15 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
 
+    public void clearGratitudeBoard(MenuItem item) {
+        gratitudeList.clear();
+        gratitudeList.add("Today");
+        gratitudeList.add("Yesterday");
+        gratitudeList.add("Tomorrow");
+        WebView webview = findViewById(R.id.board);
+        webview.reload();
     }
 
     public void startNewGratitudeView(MenuItem item){

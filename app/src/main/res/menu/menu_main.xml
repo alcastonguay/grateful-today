@@ -3,14 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="edu.maine.castonguay.grateful_today.MainActivity">
     <item
+        android:id="@+id/clear_board"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:onClick="clearGratitudeBoard"
+        android:title="@string/action_clear_board"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_new_gratitude"
         android:icon="@android:drawable/ic_input_add"
         android:onClick="startNewGratitudeView"
         android:title="@string/action_new_gratitude"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
+
 </menu>
