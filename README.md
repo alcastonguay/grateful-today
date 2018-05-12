@@ -16,6 +16,10 @@ don't want to enter a gratitude, click the back button in the upper left hand co
 gratitude, and click the checkmark in the upper right hand corner to save the new gratitude to the 
 word cloud. The gratitude board will be repopulated with the new gratitude.
 
+#### 2. clear the gratitude board to start with a fresh board
+In the hidden menu (click the sideways "...") you will find the **Clear Board** option. Select this 
+to reset the gratitude board, starting over with a fresh board. 
+
 ## Lesson Learned
 I am very excited to have the opertunity to combine my art with technology. A simple, practical design 
 can provide surprisingly intreging results. A little bit of planning enables a smooth and enjoyable 
